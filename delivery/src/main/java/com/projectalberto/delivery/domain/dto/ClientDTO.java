@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class ClientDTO {
 
+    private Long id;
+
     @NotBlank
     @Size(max = 60)
     private String name;
@@ -22,5 +24,5 @@ public class ClientDTO {
 
     @NotBlank
     @Size(max = 20)
-    private String telefone;
+    private String phone;
 }
