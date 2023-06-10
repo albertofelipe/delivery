@@ -1,10 +1,12 @@
 package com.projectalberto.delivery.api.exceptionHandler;
 
-import java.time.OffsetDateTime;
+import lombok.Getter;
 
-public record StandardError(
-    Integer status,
-    OffsetDateTime moment,
-    String message
-) {
+import java.time.OffsetDateTime;
+import java.util.List;
+
+public record StandardError(Integer status,
+                            OffsetDateTime moment,
+                            String message,
+                            List<FieldsBody> fields) {
 }
