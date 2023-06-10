@@ -24,4 +24,8 @@ public class ClientMapper {
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public Client toModel(ClientDTO clientDTO){
+        return mapper.map(clientDTO, Client.class);
+    }
 }
