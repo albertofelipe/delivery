@@ -19,8 +19,8 @@ public class ClientMapper {
         return mapper.map(client, ClientDTO.class);
     }
 
-    public List<ClientDTO> toCollectionDTO(List<Client> entregas){
-        return entregas.stream()
+    public List<ClientDTO> toCollectionDTO(List<Client> clients){
+        return clients.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
