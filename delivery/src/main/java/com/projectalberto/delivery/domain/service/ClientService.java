@@ -7,6 +7,7 @@ import com.projectalberto.delivery.domain.model.Client;
 import com.projectalberto.delivery.domain.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ClientService {
     public ClientDTO findOneClient (Long clientId){
         return clientRepository.findById(clientId)
                 .map(clientMapper::toDTO)
-                .orElseThrow(() -> new DomainException("Client not found!"));
+                .orElseThrow(() -> new DomainException("Client not found with id: " + clientId));
     }
 
     public List<ClientDTO> findAllClients(){
@@ -30,16 +31,49 @@ public class ClientService {
                 .toCollectionDTO(clientRepository.findAll());
     }
 
+    @Transactional
     public ClientDTO insertClient(ClientDTO clientDTO){
         if(existsByEmail(clientDTO.getEmail())){
-            throw new DomainException("This email already in use!");
+            throw new DomainException("This email is already in use!");
         }
         Client newClient = clientRepository.save(clientMapper.toModel(clientDTO));
         return clientMapper.toDTO(newClient);
     }
 
+    @Transactional
+    public void deleteClient(Long clientId){
+        if(clientExists(clientId)){
+            clientRepository.deleteById(clientId);
+        }
+    }
+
+    @Transactional
+    public ClientDTO updateClient(Long clientId, ClientDTO clientDTO){
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new DomainException("Client not found with id: " + clientId));
+
+        if(!clientDTO.getEmail().equals(client.getEmail())){
+            validateEmailUniqueness(clientDTO.getEmail());
+        }
+
+        client = clientMapper.toModel(clientDTO);
+        client.setId(clientId);
+
+        clientRepository.save(client);
+        return clientMapper.toDTO(client);
+    }
+
+    private void validateEmailUniqueness(String email) {
+        if (existsByEmail(email)) {
+            throw new DomainException("This email is already in use!");
+        }
+    }
 
     public boolean existsByEmail(String email){
         return clientRepository.existsByEmail(email);
+    }
+
+    public boolean clientExists(Long clientId) {
+        return clientRepository.existsById(clientId);
     }
 }
