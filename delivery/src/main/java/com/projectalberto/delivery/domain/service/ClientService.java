@@ -2,9 +2,11 @@ package com.projectalberto.delivery.domain.service;
 
 import com.projectalberto.delivery.domain.Exceptions.DomainException;
 import com.projectalberto.delivery.domain.dto.ClientDTO;
+import com.projectalberto.delivery.domain.dto.ClientResumeDTO;
 import com.projectalberto.delivery.domain.mappers.ClientMapper;
 import com.projectalberto.delivery.domain.model.Client;
 import com.projectalberto.delivery.domain.repository.ClientRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,6 +69,11 @@ public class ClientService {
         if (existsByEmail(email)) {
             throw new DomainException("This email is already in use!");
         }
+    }
+
+    public ClientResumeDTO findClientToDelivery(@Valid Long clientId){
+        ClientDTO clientDTO = findOneClient(clientId);
+        return new ClientResumeDTO(clientDTO.getId(), clientDTO.getName());
     }
 
     public boolean existsByEmail(String email){
