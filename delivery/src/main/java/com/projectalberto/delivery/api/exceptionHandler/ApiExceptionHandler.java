@@ -1,6 +1,7 @@
 package com.projectalberto.delivery.api.exceptionHandler;
 
 import com.projectalberto.delivery.domain.Exceptions.DomainException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -51,6 +52,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleDomainException(DomainException ex,
                                                         WebRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        var standardError = new StandardError(
+                status.value(),
+                OffsetDateTime.now(),
+                ex.getMessage(),
+                null
+        );
+
+        return handleExceptionInternal(ex, standardError, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex,
+                                                        WebRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
 
         var standardError = new StandardError(
                 status.value(),

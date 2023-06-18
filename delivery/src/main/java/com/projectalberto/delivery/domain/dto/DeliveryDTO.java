@@ -13,12 +13,16 @@ import java.time.OffsetDateTime;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access;
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
 
 @Getter
 @Setter
 @JsonInclude(NON_NULL)
 public class DeliveryDTO {
+
+    @JsonProperty(access = READ_ONLY)
+    private Long id;
 
     @Valid
     @NotNull
@@ -31,12 +35,12 @@ public class DeliveryDTO {
     @NotNull
     private BigDecimal tax;
 
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty(access = READ_ONLY)
     private DeliveryStatus status;
 
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty(access = READ_ONLY)
     private OffsetDateTime orderDate;
 
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty(access = READ_ONLY)
     private OffsetDateTime finishOrderDate;
 }

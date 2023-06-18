@@ -1,10 +1,10 @@
 package com.projectalberto.delivery.domain.service;
 
-import com.projectalberto.delivery.domain.Exceptions.DomainException;
 import com.projectalberto.delivery.domain.dto.ClientResumeDTO;
 import com.projectalberto.delivery.domain.dto.DeliveryDTO;
 import com.projectalberto.delivery.domain.mappers.DeliveryMapper;
 import com.projectalberto.delivery.domain.repository.DeliveryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +29,7 @@ public class DeliveryService {
     public DeliveryDTO findOneDelivery(Long deliveryId){
         return deliveryRepository.findById(deliveryId)
                 .map(deliveryMapper::toDTO)
-                .orElseThrow(() -> new DomainException("Delivery not found with id: " + deliveryId));
+                .orElseThrow(() -> new EntityNotFoundException("Delivery not found with id: " + deliveryId));
     }
 
     public List<DeliveryDTO> findAllDeliveries(){
