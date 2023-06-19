@@ -1,5 +1,6 @@
 package com.projectalberto.delivery.domain.model;
 
+import com.projectalberto.delivery.domain.Exceptions.DomainException;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,6 +19,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.projectalberto.delivery.domain.model.DeliveryStatus.*;
 import static jakarta.persistence.CascadeType.ALL;
 
 @Getter
@@ -58,5 +60,17 @@ public class Delivery {
         this.getOccurrences().add(occurrence);
 
         return occurrence;
+    }
+
+    public void finalizeDelivery(){
+        if(!couldBeFinished()){
+            throw new DomainException("This delivery couldn't be finished!");
+        }
+        setStatus(FINISHED);
+        setFinishOrderDate(OffsetDateTime.now());
+    }
+
+    public boolean couldBeFinished(){
+        return status.equals(PENDING);
     }
 }

@@ -3,6 +3,7 @@ package com.projectalberto.delivery.domain.service;
 import com.projectalberto.delivery.domain.dto.ClientResumeDTO;
 import com.projectalberto.delivery.domain.dto.DeliveryDTO;
 import com.projectalberto.delivery.domain.mappers.DeliveryMapper;
+import com.projectalberto.delivery.domain.model.Delivery;
 import com.projectalberto.delivery.domain.repository.DeliveryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,13 @@ public class DeliveryService {
 
         deliveryRepository.save(deliveryMapper.toModel(deliveryDTO));
         return deliveryDTO;
+    }
+
+    public void finalizeDelivery(Long deliveryId){
+        Delivery delivery = deliveryRepository.findById(deliveryId)
+                .orElseThrow(() -> new EntityNotFoundException("Delivery not found!"));
+
+        delivery.finalizeDelivery();
+        deliveryRepository.save(delivery);
     }
 }

@@ -4,43 +4,45 @@ import com.projectalberto.delivery.domain.dto.DeliveryDTO;
 import com.projectalberto.delivery.domain.service.DeliveryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/deliveries")
 public class DeliveryController {
 
     @Autowired
-    private DeliveryService deliveryRequest;
+    private DeliveryService deliveryService;
 
     @GetMapping("{deliveryId}")
     public ResponseEntity<DeliveryDTO> findOneDelivery(@Valid @PathVariable
                                                            Long deliveryId){
-        DeliveryDTO foundDelivery = deliveryRequest.findOneDelivery(deliveryId);
+        DeliveryDTO foundDelivery = deliveryService.findOneDelivery(deliveryId);
 
         return ResponseEntity.ok().body(foundDelivery);
     }
 
     @GetMapping
     public ResponseEntity<List<DeliveryDTO>> findAllDeliveries(){
-        return ResponseEntity.ok().body(deliveryRequest.findAllDeliveries());
+        return ResponseEntity.ok().body(deliveryService.findAllDeliveries());
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public DeliveryDTO insertOneDeliverie(@Valid @RequestBody
                                               DeliveryDTO deliveryDTO){
-        return deliveryRequest.insertDelivery(deliveryDTO);
+        return deliveryService.insertDelivery(deliveryDTO);
+    }
+
+    @PutMapping("/{deliveryId}/finalization")
+    @ResponseStatus(NO_CONTENT)
+    public void finalizeDelivery(@PathVariable Long deliveryId){
+        deliveryService.finalizeDelivery(deliveryId);
     }
 
 }
