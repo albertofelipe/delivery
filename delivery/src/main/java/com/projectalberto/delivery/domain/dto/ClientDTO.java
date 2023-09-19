@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ClientDTO {
 
     @JsonProperty(access = READ_ONLY)
