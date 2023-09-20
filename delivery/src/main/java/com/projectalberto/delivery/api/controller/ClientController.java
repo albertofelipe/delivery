@@ -4,6 +4,7 @@ import com.projectalberto.delivery.domain.dto.ClientDTO;
 import com.projectalberto.delivery.domain.service.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,9 @@ public class ClientController {
                                                        Long clientId){
         ClientDTO clientDTO = clientService.findOneClient(clientId);
 
-        return ResponseEntity.ok().body(clientDTO);
+        return (clientDTO != null)
+                ? ResponseEntity.ok(clientDTO)
+                : ResponseEntity.notFound().build();
     }
 
     @GetMapping
@@ -49,8 +52,16 @@ public class ClientController {
     @PutMapping("/{clientId}")
     public ResponseEntity<ClientDTO> updateClient(@PathVariable Long clientId,
                                                   @Valid @RequestBody ClientDTO clientDTO){
+        if (clientService.existsByEmail(clientDTO.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
+        if(!clientService.clientExists(clientId)){
+            return ResponseEntity.notFound().build();
+        }
+
         ClientDTO clientUpdated = clientService.updateClient(clientId, clientDTO);
-        return ResponseEntity.ok().body(clientUpdated);
+        return ResponseEntity.ok(clientUpdated);
     }
 
     @DeleteMapping("/{clientId}")
