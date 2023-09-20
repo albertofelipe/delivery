@@ -8,6 +8,7 @@ import lombok.*;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,6 +16,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 @Builder
 public class ClientDTO {
 
+    @EqualsAndHashCode.Include
     @JsonProperty(access = READ_ONLY)
     private Long id;
 
@@ -30,4 +32,5 @@ public class ClientDTO {
     @NotBlank
     @Size(max = 20)
     private String phone;
+
 }

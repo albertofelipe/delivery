@@ -12,6 +12,12 @@ public class Constants {
             .phone("99999999")
             .build();
 
+    public static final ClientDTO CLIENT_DTO_wId = ClientDTO.builder()
+            .name("Alberto")
+            .email("felipe@gmail.com")
+            .phone("99999999")
+            .build();
+
     public static final Client CLIENT= Client.builder()
             .id(1L)
             .name("Alberto")
