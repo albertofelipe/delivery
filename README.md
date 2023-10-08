@@ -2,7 +2,7 @@
 
 ### About the project
 
-- This project is a delivery application developed to fix the concepts related to a REST API. From diagram analysis to the application of business and programming rules.
+- I first thought of this project as a delivery application developed to fix the concepts related to a REST API, from diagram analysis to the application of business and programming rules. But after gaining more knowledge, I decided to apply these to this project.
 
 - The application consists of implementing a complete domain model of a Delivery.
 
@@ -19,13 +19,15 @@
 - Maven
 - FlyWay
 - Postman
+- Mockito and Asserj
 
 ## Some patterns used
 
-- DTO pattern
-- Migration pattern
+- DTO
+- Migration
 - API REST
 - Exception Handler
+- Unit Tests and Integration Tests
 - etc..
 
 ### Author
