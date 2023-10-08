@@ -1,5 +1,6 @@
 package com.projectalberto.delivery.domain.service;
 
+import com.projectalberto.delivery.domain.Exceptions.DomainException;
 import com.projectalberto.delivery.domain.dto.ClientResumeDTO;
 import com.projectalberto.delivery.domain.dto.DeliveryDTO;
 import com.projectalberto.delivery.domain.mappers.DeliveryMapper;
@@ -30,7 +31,7 @@ public class DeliveryService {
     public DeliveryDTO findOneDelivery(Long deliveryId){
         return deliveryRepository.findById(deliveryId)
                 .map(deliveryMapper::toDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Delivery not found with id: " + deliveryId));
+                .orElseThrow(() -> new DomainException("Delivery not found with id: " + deliveryId));
     }
 
     public List<DeliveryDTO> findAllDeliveries(){

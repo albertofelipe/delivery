@@ -1,28 +1,23 @@
 package com.projectalberto.delivery.api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projectalberto.delivery.domain.Exceptions.DomainException;
 import com.projectalberto.delivery.domain.dto.ClientDTO;
 import com.projectalberto.delivery.domain.service.ClientService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.projectalberto.delivery.domain.common.ClientConstants.CLIENT_DTO;
+import static com.projectalberto.delivery.domain.common.ClientConstants.CLIENT_DTO_wId;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import static com.projectalberto.delivery.domain.common.Constants.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @WebMvcTest(ClientController.class)
 class ClientControllerTest {

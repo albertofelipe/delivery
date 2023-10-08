@@ -5,7 +5,6 @@ import com.projectalberto.delivery.domain.dto.ClientDTO;
 import com.projectalberto.delivery.domain.mappers.ClientMapper;
 import com.projectalberto.delivery.domain.model.Client;
 import com.projectalberto.delivery.domain.repository.ClientRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.projectalberto.delivery.domain.common.Constants.*;
+import static com.projectalberto.delivery.domain.common.ClientConstants.*;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.*;
