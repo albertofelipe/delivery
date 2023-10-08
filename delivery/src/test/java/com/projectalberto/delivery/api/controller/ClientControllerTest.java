@@ -42,7 +42,7 @@ class ClientControllerTest {
 
     @Test
     void findOneClient_WithNoExistingId_ReturnsNotFound() throws Exception {
-        mockMvc.perform(get("/planets/1"))
+        mockMvc.perform(get("/clients/1"))
                 .andExpect(status().isNotFound());
     }
 

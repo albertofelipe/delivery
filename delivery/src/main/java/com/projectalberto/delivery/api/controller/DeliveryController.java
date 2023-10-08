@@ -24,7 +24,9 @@ public class DeliveryController {
                                                            Long deliveryId){
         DeliveryDTO foundDelivery = deliveryService.findOneDelivery(deliveryId);
 
-        return ResponseEntity.ok().body(foundDelivery);
+        return (foundDelivery != null)
+                ? ResponseEntity.ok(foundDelivery)
+                : ResponseEntity.notFound().build();
     }
 
     @GetMapping
@@ -34,7 +36,7 @@ public class DeliveryController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public DeliveryDTO insertOneDeliverie(@Valid @RequestBody
+    public DeliveryDTO insertOneDelivery(@Valid @RequestBody
                                               DeliveryDTO deliveryDTO){
         return deliveryService.insertDelivery(deliveryDTO);
     }

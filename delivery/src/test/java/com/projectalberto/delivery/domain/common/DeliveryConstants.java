@@ -10,7 +10,6 @@ import com.projectalberto.delivery.domain.model.OrderReceiver;
 import static com.projectalberto.delivery.domain.common.ClientConstants.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import static com.projectalberto.delivery.domain.model.DeliveryStatus.PENDING;
 
@@ -19,7 +18,13 @@ public class DeliveryConstants {
 
     public static final DeliveryDTO DELIVERY_DTO = DeliveryDTO.builder()
             .client(CLIENT_RESUME)
-            .receiver(new OrderReceiverDTO())
+            .receiver(new OrderReceiverDTO(
+                    "Alberto",
+                    "Dom Pedro",
+                    "1234",
+                    "Bacuri",
+                    "Cerec"
+            ))
             .tax(BigDecimal.ONE)
             .status(DeliveryStatus.valueOf(String.valueOf(PENDING)))
             .orderDate(OffsetDateTime.now())
