@@ -44,7 +44,7 @@
 ```
 - Execute:
 ```
-java -jar delivery/target/delivery-0.0.1-SNAPSHOT.jar
+java -jar target/delivery-0.0.1-SNAPSHOT.jar
 ```
 
 The API can be accessed at localhost:8080.
@@ -53,10 +53,14 @@ The API can be accessed at localhost:8080.
 - Clone git repository
 - Access the project package
 - Build the project:
+
 ```
 ./mvnw clean package
 ```
 - Up docker-compose file:
+
+Obs.: MySQL Container in Port 3306
+
 ```
 docker-compose up
 ```
