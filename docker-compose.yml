@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+    app:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8080"
+      environment:
+         - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/delivery
+         - SPRING_DATASOURCE_USERNAME=albertxfs
+         - SPRING_DATASOURCE_PASSWORD=1234
+
+      depends_on:
+        - mysqldb
+      command: ["./wait-for-it.sh", "mysqldb:3306", "java", "-jar", "app.jar"]
+    mysqldb:
+      image: mysql
+      container_name: mysqldb
+      ports:
+        - "3306:3306"
+      environment:
+
+        - MYSQL_DATABASE=delivery
+        - MYSQL_USER=albertxfs
+        - MYSQL_PASSWORD=1234
+        - MYSQL_ROOT_PASSWORD=1234
+      volumes:
+        - delivery_data:/var/lib/mysql
+
+volumes:
+  delivery_data:
