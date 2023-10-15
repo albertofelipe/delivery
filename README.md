@@ -16,6 +16,7 @@
 - Spring Boot
 - JPA / Hibernate
 - MySQL
+- Docker - Docker Compose
 - Maven
 - FlyWay
 - Postman
@@ -28,7 +29,113 @@
 - API REST
 - Exception Handler
 - Unit Tests and Integration Tests
-- etc..
+- Use of containers
+- Dependency Injection
+- Layered application (Repository, Service and Controller)
+
+## How to execute
+
+### Locally
+- Clone git repository
+- Access the project package
+- Build the project:
+```
+./mvnw clean package
+```
+- Execute:
+```
+java -jar delivery/target/delivery-0.0.1-SNAPSHOT.jar
+```
+
+The API can be accessed at localhost:8080.
+### With Docker
+
+- Clone git repository
+- Access the project package
+- Build the project:
+```
+./mvnw clean package
+```
+- Up docker-compose file:
+```
+docker-compose up
+```
+The API can be accessed at localhost:8080.
+
+### API Endpoints
+Just a few endpoints for the application to be tested.
+
+To make the HTTP requests below, the PostMan tool was used.
+
+#### CLIENTS
+- POST /clients
+```
+http://localhost:8080/clients
+```
+
+```
+{
+    "name": "Person1",
+    "email": "person1@gmail.com",
+    "phone": "9999999"
+}
+```
+- GET /clients/{clientId} or /clients
+
+```
+http://localhost:8080/clients/1
+```
+
+- DELETE /clients/{clientId}
+
+
+- UPDATE /clients/{clientId}
+
+```
+http://localhost:8080/clients/1
+```
+```
+{
+    "name": "Person2",
+    "email": "person2@gmail.com",
+    "phone": "9999998"
+}
+```
+
+#### Deliveries
+
+- POST /deliveries
+```
+http://localhost:8080/deliveries
+```
+
+```
+{
+    "client":{
+        "id":1,
+        "name":"Person1"
+        },
+    "receiver":{
+        "name":"Person3",
+        "street":"Dom Pedro",
+        "number":"1234",
+        "neighborhood":"Cupuaçu",
+        "complement":"School"
+        },
+        "tax":1
+}
+```
+- GET /deliveries/{deliveryId} or /deliveries
+
+```
+http://localhost:8080/deliveries/1
+```
+- FINALIZE PUT /deliveries/{deliveryId}/finalization
+
+```
+http://localhost:8080/deliveries/1/finalization
+```
+
 
 ### Author
 
