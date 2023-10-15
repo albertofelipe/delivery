@@ -31,7 +31,7 @@ public class DeliveryService {
     public DeliveryDTO findOneDelivery(Long deliveryId){
         return deliveryRepository.findById(deliveryId)
                 .map(deliveryMapper::toDTO)
-                .orElseThrow(() -> new DomainException("Delivery not found with id: " + deliveryId));
+                .orElseThrow(() -> new EntityNotFoundException("Delivery not found with id: " + deliveryId));
     }
 
     public List<DeliveryDTO> findAllDeliveries(){

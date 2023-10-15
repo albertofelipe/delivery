@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -28,11 +29,9 @@ public class ClientController {
     ClientService clientService;
 
     @GetMapping("/{clientId}")
-    public ResponseEntity<ClientDTO> findOneClient(@Valid @PathVariable
-                                                       Long clientId){
+    public ResponseEntity<ClientDTO> findOneClient(@PathVariable Long clientId) {
         ClientDTO clientDTO = clientService.findOneClient(clientId);
-
-        return (clientDTO != null)
+        return clientDTO != null
                 ? ResponseEntity.ok(clientDTO)
                 : ResponseEntity.notFound().build();
     }
@@ -65,7 +64,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/{clientId}")
-    public ResponseEntity<Object> deleteClient(@PathVariable Long clientId){
+    public ResponseEntity<Object> deleteClient(@PathVariable Long clientId) {
         if(!clientService.clientExists(clientId)){
             return ResponseEntity.status(NOT_FOUND).body("Client not found!");
         }

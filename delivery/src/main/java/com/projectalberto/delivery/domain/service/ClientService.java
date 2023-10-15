@@ -27,7 +27,7 @@ public class ClientService {
     public ClientDTO findOneClient (Long clientId){
         return clientRepository.findById(clientId)
                 .map(clientMapper::toDTO)
-                .orElseThrow(() -> new DomainException("Client not found with id:" + clientId));
+                .orElseThrow(() -> new EntityNotFoundException("Client not found with id:" + clientId));
     }
 
     public List<ClientDTO> findAllClients(){
@@ -50,10 +50,8 @@ public class ClientService {
             clientRepository.deleteById(clientId);
 
         } catch (DataIntegrityViolationException e2){
-            e2.printStackTrace();
             throw new DomainException("Data Integrity violation.");
         } catch (RuntimeException e3){
-            e3.printStackTrace();
             throw new DomainException("Something went wrong.");
         }
 
@@ -62,7 +60,7 @@ public class ClientService {
     @Transactional
     public ClientDTO updateClient(Long clientId, ClientDTO clientDTO){
         Client client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new DomainException("Client not found with id: " + clientId));
+                .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + clientId));
 
         if(!clientDTO.getEmail().equals(client.getEmail())){
             validateEmailUniqueness(clientDTO.getEmail());
@@ -88,7 +86,7 @@ public class ClientService {
 
     private void validateIfClientExists(Long clientId) {
         if (!clientExists(clientId)){
-            throw new DomainException("Client not found with id: " + clientId);
+            throw new EntityNotFoundException("Client not found with id: " + clientId);
         }
     }
 
