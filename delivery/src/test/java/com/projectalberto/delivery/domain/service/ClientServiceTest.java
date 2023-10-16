@@ -5,6 +5,7 @@ import com.projectalberto.delivery.domain.dto.ClientDTO;
 import com.projectalberto.delivery.domain.mappers.ClientMapper;
 import com.projectalberto.delivery.domain.model.Client;
 import com.projectalberto.delivery.domain.repository.ClientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -50,10 +51,10 @@ class ClientServiceTest {
 
     @Test
     void findOneClient_WithInvalidId_ThrowsException() {
-        doThrow(new DomainException("")).when(clientRepository).findById(anyLong());
+        doThrow(new EntityNotFoundException("")).when(clientRepository).findById(anyLong());
 
         assertThatThrownBy(() -> clientService.findOneClient(anyLong()))
-                .isInstanceOf(DomainException.class);
+                .isInstanceOf(EntityNotFoundException.class);
 
         verify(clientRepository, times(1)).findById(anyLong());
         verifyNoInteractions(clientMapper);
@@ -149,10 +150,10 @@ class ClientServiceTest {
     @Test
     void updateClient_WithInvalidData_ThrowsException() {
         when(clientRepository.findById(CLIENT_DTO.getId()))
-                .thenThrow(new DomainException(""));
+                .thenThrow(new EntityNotFoundException(""));
 
         assertThatThrownBy(() -> clientService.updateClient(1L, CLIENT_DTO))
-                .isInstanceOf(DomainException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
 }

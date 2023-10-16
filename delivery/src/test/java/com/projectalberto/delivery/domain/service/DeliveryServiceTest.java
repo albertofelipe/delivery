@@ -6,6 +6,7 @@ import com.projectalberto.delivery.domain.dto.DeliveryDTO;
 import com.projectalberto.delivery.domain.mappers.DeliveryMapper;
 import com.projectalberto.delivery.domain.model.Delivery;
 import com.projectalberto.delivery.domain.repository.DeliveryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,10 +58,10 @@ class DeliveryServiceTest {
 
     @Test
     void findOneDelivery_WithInvalidId_ThrowsException() {
-        doThrow(new DomainException("")).when(deliveryRepository).findById(anyLong());
+        doThrow(new EntityNotFoundException("")).when(deliveryRepository).findById(anyLong());
 
         assertThatThrownBy(() -> deliveryService.findOneDelivery(anyLong()))
-                .isInstanceOf(DomainException.class);
+                .isInstanceOf(EntityNotFoundException.class);
 
         verify(deliveryRepository, times(1)).findById(anyLong());
         verifyNoInteractions(deliveryMapper);
